@@ -1,0 +1,260 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" media="screen" href="../static/leaves.css?ver=0.84">
+<script type=text/javascript
+  src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
+  <script type="text/javascript" src="../static/js/jquery.ui.slider.js"></script>
+<script type=text/javascript>
+	var $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
+</script> 
+<title>个人主页</title>
+<style type="text/css">
+<!--
+	*{ margin:0; padding:0;}
+	        .nav{
+	position: absolute;
+	top: 50px;
+	z-index: 2;
+}
+        #nav_bg{position: absolute;left: 60px;}
+        #nav_guess{position: absolute;top:362px;left: 113px;cursor: pointer;}
+        #nav_gue{position: absolute;top:410px;left: 190px;cursor: pointer;width: 100px;height: 40px;
+            background-color:#67311c;display: none;}
+        #nav_listen{position: absolute;top:262px;left: 138px;cursor: pointer;}
+        #nav_lis{position: absolute;top:300px;left: 220px;cursor: pointer;width: 0px;height: 40px;
+            background-color:#67311c;}
+        #nav_tops{position: absolute;top:462px;left: 138px;cursor: pointer;}
+        #nav_top{position: absolute;top:510px;left: 220px;cursor: pointer;width: 100px;height: 40px;
+            background-color:#67311c;display: none;}
+        .nav1{float: left;}
+/*	#nav_bg {
+		position:absolute;
+		width:200px;
+		height:115px;
+		z-index:3;
+		left: 60px;
+		top: 50px;
+	}*/
+	#cloud {
+		position:absolute;
+		width:200px;
+		height:115px;
+		z-index:4;
+		left: 0px;
+		top: 0px;
+	}
+	#eye {
+		position:absolute;
+		width:118px;
+		height:115px;
+		z-index:5;
+		top: 162px;
+		left: 195px;
+	}
+	#branch {
+		position:absolute;
+		width:259px;
+		height:115px;
+		z-index:6;
+		left: 1103px;
+		top: 0px;
+	}
+	#homepage {
+		position:absolute;
+		width:200px;
+		height:115px;
+		z-index:7;
+		left: 461px;
+		top: 54px;
+	}
+	#avatar {
+		position:absolute;
+		width:200px;
+		height:115px;
+		z-index:8;
+		left: 553px;
+		top: 153px;
+	}
+	#miao {
+		position:absolute;
+		width:200px;
+		height:115px;
+		z-index:9;
+		left: 446px;
+		top: 583px;
+	}
+	#bg {
+		position:absolute;
+		width:200px;
+		height:115px;
+		z-index:1;
+		left: 419px;
+		top: 11px;
+	}
+	#list {
+		position:absolute;
+		width:200px;
+		height:115px;
+		z-index:-1;
+		left: 887px;
+		top: 32px;
+	}
+	#name {
+		position:absolute;
+		width:200px;
+		height:61px;
+		z-index:11;
+		left: 476px;
+		top: 368px;
+	}
+
+	#leaves {
+		position:absolute;
+		width:200px;
+		height:59px;
+		z-index:10;
+		left: 477px;
+		top: 427px;
+	}
+	#logout {
+		position:absolute;
+		width:200px;
+		height:115px;
+		z-index:12;
+		left: 715px;
+		top: 532px;
+		cursor: pointer;
+	}
+
+	#userName {
+		position:absolute;
+		width:200px;
+		height:61px;
+		z-index:11;
+		left: 619px;
+		top: 373px;
+		color: white;
+		font-size: 20pt;
+	}
+
+	#userLeave{
+		position:absolute;
+		width:200px;
+		height:61px;
+		z-index:11;
+		left: 684px;
+		top: 437px;
+		color: white;
+		font-size: 20pt;	
+	}
+-->
+</style>
+<script type="text/JavaScript">
+<!--
+function MM_swapImgRestore() { //v3.0
+  var i,x,a=document.MM_sr; for(i=0;a&&i<a.length&&(x=a[i])&&x.oSrc;i++) x.src=x.oSrc;
+}
+
+function MM_preloadImages() { //v3.0
+  var d=document; if(d.images){ if(!d.MM_p) d.MM_p=new Array();
+    var i,j=d.MM_p.length,a=MM_preloadImages.arguments; for(i=0; i<a.length; i++)
+    if (a[i].indexOf("#")!=0){ d.MM_p[j]=new Image; d.MM_p[j++].src=a[i];}}
+}
+
+function MM_findObj(n, d) { //v4.01
+  var p,i,x;  if(!d) d=document; if((p=n.indexOf("?"))>0&&parent.frames.length) {
+    d=parent.frames[n.substring(p+1)].document; n=n.substring(0,p);}
+  if(!(x=d[n])&&d.all) x=d.all[n]; for (i=0;!x&&i<d.forms.length;i++) x=d.forms[i][n];
+  for(i=0;!x&&d.layers&&i<d.layers.length;i++) x=MM_findObj(n,d.layers[i].document);
+  if(!x && d.getElementById) x=d.getElementById(n); return x;
+}
+
+function MM_swapImage() { //v3.0
+  var i,j=0,x,a=MM_swapImage.arguments; document.MM_sr=new Array; for(i=0;i<(a.length-2);i+=3)
+   if ((x=MM_findObj(a[i]))!=null){document.MM_sr[j++]=x; if(!x.oSrc) x.oSrc=x.src; x.src=a[i+2];}
+}
+//-->
+</script>
+</head>
+
+<body onload="MM_preloadImages('../static/images/closedEye.png','../static/images/miao.gif')">
+
+    <!--退出函数-->
+	<script type="text/javascript">
+		function _logout(){
+		
+			$.getJSON($SCRIPT_ROOT + '/_logout',{
+					},function(data){
+							location.href="/";
+			});	
+		}
+
+	</script>
+    <!--导航-->
+    <div class = "nav">
+        <div>
+            <img id="nav_bg" src="../static/images/nav_bg.png">
+        </div>
+
+        <div id="nav_lis" >
+            <a href="/listen" style="text-decoration:none;color: white;text-align:center">听听歌</a>
+        </div> 
+
+        <div>
+            <a href="/listen"><img src="../static/images/nav_listen.png" name="nav_listen" id="nav_listen"
+            onmouseover=" var lis=document.getElementById('nav_lis');
+            lis.style.width='100px';" 
+            onmouseout=" var lis=document.getElementById('nav_lis');
+            lis.style.width='0px';"            >        </div>
+
+        <div>
+            <a href="/guess"><img id="nav_guess" src="../static/images/nav_guess.png"
+            onmouseout=" var lis=document.getElementById('nav_gue');
+            lis.style.display='none';"
+            onmouseover=" var lis=document.getElementById('nav_gue');
+            lis.style.display='block';"  >
+        </div>
+
+        <div id="nav_gue" >
+            <a href="/guess" style="text-decoration:none;color: white;text-align:center">猜猜歌</a>
+        </div>
+
+        <div>
+            <a href="/top"><img id="nav_tops" src="../static/images/nav_top.png"
+            onmouseout=" var lis=document.getElementById('nav_top');
+            lis.style.display='none';"
+            onmouseover=" var lis=document.getElementById('nav_top');
+            lis.style.display='block';"  >
+        </div>
+
+        <div id="nav_top" >
+            <a href="/top" style="text-decoration:none;color: white;text-align:center">排行榜</a>
+        </div>
+</div>
+	
+<div id="logout"><img src="../static/images/logout.png" width="160" height="120" onclick="_logout()" /></div>
+	<div id="leaves"><img src="../static/images/leaves.png" width="200" height="50" /></div>
+	<div id="bg"><img src="../static/images/background.png" width="500" height="700" /></div>
+	<div id="miao">
+		<a href="#" onmouseout="MM_swapImgRestore()" onmouseover="MM_swapImage('Image12','','../static/images/miao.gif',1)">
+		<img src="../static/images/miao.jpg" name="Image12" width="250" height="110" border="0" id="Image12" /></a>
+		<a href="#" onmouseout="MM_swapImgRestore()" onmouseover="MM_swapImage('Image8','','../static/images/miao.gif',1)"></a>
+	</div>
+<div id="list"><img src="../static/images/list.png" width="333" height="683" /></div>
+	<div id="name"><img src="../static/images/name.png" width="200" height="50" /></div>
+
+	<div id="avatar"><img src="{{user_pic}}" width="180" height="175" /></div>
+	<div id="homepage"><img src="../static/images/homepage.png" width="400" height="80" /></div>
+	<div id="branch"><img src="../static/images/branch.png" width="289" height="203" /></div>
+	<div id="eye"><a href="/home" onmouseout="MM_swapImgRestore()" onmouseover="MM_swapImage('Image4','','../static/images/openEye.png',1)"><img src="../static/images/closedEye.png" name="Image4" width="88" height="91" border="0" id="Image4" /></a></div>
+	<div id="cloud"><img src="../static/images/cloud.png" width="424" height="197" /></div>
+	<div id="userName">
+<p>{{user_name}}</p></div> 
+	<div id="userLeave">
+<p>{{leaves}}</p></div> 
+
+</body>
+<script type="text/javascript" src="../static/leaves.js"></script>
+</html>

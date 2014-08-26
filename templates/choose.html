@@ -1,0 +1,233 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>选择头像</title>
+<link href="../static/bootstrap.css" rel="stylesheet" />
+<link rel="shortcut icon" href="../static/icon.png" type="image/x-icon">
+<script type="text/javascript" src="../static/jquery-1.7.2.min.js"></script>
+<script type="text/javascript" src="../static/artDialog4.1.6/artDialog.js"></script>
+<script src="../static/artDialog4.1.6/jquery.artDialog.source.js?skin=default"></script>
+<script type=text/javascript
+  src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
+<script type=text/javascript>
+<!--
+var $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
+
+function MM_swapImgRestore() { //v3.0
+  var i,x,a=document.MM_sr; for(i=0;a&&i<a.length&&(x=a[i])&&x.oSrc;i++) x.src=x.oSrc;
+}
+
+function MM_preloadImages() { //v3.0
+  var d=document; if(d.images){ if(!d.MM_p) d.MM_p=new Array();
+    var i,j=d.MM_p.length,a=MM_preloadImages.arguments; for(i=0; i<a.length; i++)
+    if (a[i].indexOf("#")!=0){ d.MM_p[j]=new Image; d.MM_p[j++].src=a[i];}}
+}
+
+function MM_findObj(n, d) { //v4.01
+  var p,i,x;  if(!d) d=document; if((p=n.indexOf("?"))>0&&parent.frames.length) {
+    d=parent.frames[n.substring(p+1)].document; n=n.substring(0,p);}
+  if(!(x=d[n])&&d.all) x=d.all[n]; for (i=0;!x&&i<d.forms.length;i++) x=d.forms[i][n];
+  for(i=0;!x&&d.layers&&i<d.layers.length;i++) x=MM_findObj(n,d.layers[i].document);
+  if(!x && d.getElementById) x=d.getElementById(n); return x;
+}
+
+function MM_swapImage() { //v3.0
+  var i,j=0,x,a=MM_swapImage.arguments; document.MM_sr=new Array; for(i=0;i<(a.length-2);i+=3)
+   if ((x=MM_findObj(a[i]))!=null){document.MM_sr[j++]=x; if(!x.oSrc) x.oSrc=x.src; x.src=a[i+2];}
+}
+//-->
+</script>
+<style>
+body{font-family:"黑体"}
+#intro{color:white;font-size:14pt;position:absolute; top:250px; left:850px;}
+.firstP{color:white;position:absolute; top:300px; left:940px;-webkit-transform:rotate(10deg); 
+font-size:12pt; text-align: center; line-height: 3.5em;}
+.trans{-webkit-transition:width 2s, top 2s, -webkit-transform 2s; /* Safari and Chrome */}
+.firstP:hover
+{
+top:250px;
+transform:rotate(180deg);
+-webkit-transform:rotate(180deg); /* Safari and Chrome */
+}
+.log{position:absolute; top: 713px; right:195px;}
+#btn-log{width:220px;height:40px;position:relative;font-size: 15pt;background-color:rgb(236,178,10); color:white; border:0px;text-align: center;line-height: 40px;cursor: pointer;}
+#remember{position:absolute; bottom:-35px; right: 0px;}
+.checkbox{position: absolute; bottom:-40px;}
+.signup{color:white;position: absolute; bottom: -20px;}
+#avatar_bg {
+	position:absolute;
+	width:450px;
+	height:300px;
+	z-index:1;
+	left: 815px;
+	top: 415px;
+}
+#avatar1 {
+	position:absolute;
+	width:100px;
+	height:115px;
+	z-index:2;
+	left: 890px;
+	top: 506px;
+}
+#avatar2 {
+	position:absolute;
+	width:100px;
+	height:115px;
+	z-index:3;
+	left: 990px;
+	top: 506px;
+}
+#avatar3 {
+	position:absolute;
+	width:100px;
+	height:115px;
+	z-index:4;
+	left: 1087px;
+	top: 506px;
+}
+#avatar4 {
+	position:absolute;
+	width:100px;
+	height:115px;
+	z-index:5;
+	left: 937px;
+	top: 591px;
+}
+#avatar5 {
+	position:absolute;
+	width:100px;
+	height:115px;
+	z-index:6;
+	left: 1038px;
+	top: 593px;
+}
+</style>
+</head>
+<body onLoad="MM_preloadImages('../static/images/24.png')">
+
+<div class="login">
+  <img src="../static/bg.jpg" />
+  <div class="firstP trans move">
+	<p style="font-size:6em">乐 玩</p>
+	<p style="font-size:1.2em">一起玩音乐</p>
+</div>
+
+<!--span id=result>?</span>
+<div id="graybar"> </div>
+<div id="copyright">
+<p>© 2005－2013 yuewan.com, all rights reserved</p-->
+</div>
+</div>
+<div id="avatar_bg"><img src="../static/images/c_background.png" width="800" height="400"></div>
+<div id="avatar1"><img src="../static/images/user_pic/0.png" id="pic1"></div>
+<div id="avatar2"><img src="../static/images/user_pic/1.png" id="pic2"></div>
+<div id="avatar3"><img src="../static/images/user_pic/2.png" id="pic3"></div>
+<div id="avatar4"><img src="../static/images/user_pic/3.png" id="pic4"></div>
+<div id="avatar5"><img src="../static/images/user_pic/4.png" id="pic5"></div>
+
+
+<script type="text/javascript">
+ $(function() {
+    var submit_form = function(e) {
+	var picPath = '../static/images/user_pic/0.png';//昵称
+	alert("欢迎进入乐玩！");
+	{
+		  $.getJSON($SCRIPT_ROOT + '/_choose', {
+			picPath1: picPath
+		  }, function(data) {
+		  $('#result').text(data.result);
+		  if(data.result==1)
+           location.href="/home";
+		  });
+		  return false;
+		};
+	}
+	
+    $('#pic1').bind('click', submit_form);
+
+  });
+ $(function() {
+    var submit_form2 = function(e) {
+	var picPath = '../static/images/user_pic/1.png';//昵称
+	alert("欢迎进入乐玩！");
+	{
+		  $.getJSON($SCRIPT_ROOT + '/_choose', {
+			picPath1: picPath
+		  }, function(data) {
+		  $('#result').text(data.result);
+		  if(data.result==1)
+           location.href="/guess";
+		  });
+		  return false;
+		};
+	}
+	
+    $('#pic2').bind('click', submit_form2);
+
+  });
+ $(function() {
+    var submit_form3 = function(e) {
+	var picPath = '../static/images/user_pic/2.png';//昵称
+	alert("欢迎进入乐玩！");
+	{
+		  $.getJSON($SCRIPT_ROOT + '/_choose', {
+			picPath1: picPath
+		  }, function(data) {
+		  $('#result').text(data.result);
+		  if(data.result==1)
+           location.href="/guess";
+		  });
+		  return false;
+		};
+	}
+	
+    $('#pic3').bind('click', submit_form3);
+
+  });
+ $(function() {
+    var submit_form4 = function(e) {
+	var picPath = '../static/images/user_pic/3.png';//昵称
+	alert("欢迎进入乐玩！");
+	{
+		  $.getJSON($SCRIPT_ROOT + '/_choose', {
+			picPath1: picPath
+		  }, function(data) {
+		  $('#result').text(data.result);
+		  if(data.result==1)
+           location.href="/guess";
+		  });
+		  return false;
+		};
+	}
+	
+    $('#pic4').bind('click', submit_form4);
+
+  });
+ $(function() {
+    var submit_form5 = function(e) {
+	var picPath = '../static/images/user_pic/4.png';//昵称
+	alert("欢迎进入乐玩！");
+	{
+		  $.getJSON($SCRIPT_ROOT + '/_choose', {
+			picPath1: picPath
+		  }, function(data) {
+		  $('#result').text(data.result);
+		  if(data.result==1)
+           location.href="/guess";
+		  });
+		  return false;
+		};
+	}
+	
+    $('#pic5').bind('click', submit_form5);
+
+  });
+</script>
+
+</body>
+</html>
