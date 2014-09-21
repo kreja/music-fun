@@ -1,559 +1,230 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
-<html xmlns="http://www.w3.org/1999/xhtml"> 
-<head> 
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /> 
-	<link rel="stylesheet" type="text/css" media="screen" href="../static/leaves.css?ver=0.84">
-    <title>猜歌</title>
-	<link rel="shortcut icon" href="../static/icon.png" type="image/x-icon">
-    <script type=text/javascript
-      src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
-      <script type="text/javascript" src="../static/js/jquery.ui.slider.js"></script>
-    <script type=text/javascript>
-<!--
-var i=0;
-		var sum;
-      	var $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
-
-function MM_swapImgRestore() { //v3.0
-  var i,x,a=document.MM_sr; for(i=0;a&&i<a.length&&(x=a[i])&&x.oSrc;i++) x.src=x.oSrc;
-}
-
-function MM_preloadImages() { //v3.0
-  var d=document; if(d.images){ if(!d.MM_p) d.MM_p=new Array();
-    var i,j=d.MM_p.length,a=MM_preloadImages.arguments; for(i=0; i<a.length; i++)
-    if (a[i].indexOf("#")!=0){ d.MM_p[j]=new Image; d.MM_p[j++].src=a[i];}}
-}
-
-function MM_findObj(n, d) { //v4.01
-  var p,i,x;  if(!d) d=document; if((p=n.indexOf("?"))>0&&parent.frames.length) {
-    d=parent.frames[n.substring(p+1)].document; n=n.substring(0,p);}
-  if(!(x=d[n])&&d.all) x=d.all[n]; for (i=0;!x&&i<d.forms.length;i++) x=d.forms[i][n];
-  for(i=0;!x&&d.layers&&i<d.layers.length;i++) x=MM_findObj(n,d.layers[i].document);
-  if(!x && d.getElementById) x=d.getElementById(n); return x;
-}
-
-function MM_swapImage() { //v3.0
-  var i,j=0,x,a=MM_swapImage.arguments; document.MM_sr=new Array; for(i=0;i<(a.length-2);i+=3)
-   if ((x=MM_findObj(a[i]))!=null){document.MM_sr[j++]=x; if(!x.oSrc) x.oSrc=x.src; x.src=a[i+2];}
-}
-//-->
-</script> 
-    <style>
-        *{ margin: 0; padding:0;}
-        body{background-color: #fffaf1;font-size:12pt;}
-        .vol{position: relative;left: 145px;top:10px;}
-        ul{ list-style-type:none;}
-        .nav{
-	position: absolute;
-	top: 50px;
-	z-index: 4;
-}
-        #nav_bg{position: absolute;left: 60px;}
-        #nav_guess{position: absolute;top:362px;left: 113px;cursor: pointer;}
-        #nav_gue{position: absolute;top:410px;left: 190px;cursor: pointer;width: 100px;height: 40px;
-            background-color:#67311c;display: none;}
-        #nav_listen{position: absolute;top:262px;left: 138px;cursor: pointer;}
-        #nav_lis{position: absolute;top:300px;left: 220px;cursor: pointer;width: 0px;height: 40px;
-            background-color:#67311c;}
-        #nav_tops{position: absolute;top:462px;left: 138px;cursor: pointer;}
-        #nav_top{position: absolute;top:510px;left: 220px;cursor: pointer;width: 100px;height: 40px;
-            background-color:#67311c;display: none;}
-        .nav1{float: left;}
-
-        #title{
-        	position: relative;
-            top:-30px;
-            left: 200px;
-        	width: 800px;
-        	margin: auto;
-        }
-		#comment{
-			width:400px;
-			height:70px;
-		}
-        .button{
-            cursor: pointer;
-        }
-        #question{
-	position: absolute;
-	top:150px;
-	z-index: 3;
-        }
-        #answer{
-            width:200px;height:25px;
-            position:relative;top:-7px;
-        }
-        #sub-answer{
-            width:60px;height:29px;
-            background-color:#edbd03;color:white;
-            position: absolute;
-            right: -70px;
-            top: 2px;
-            text-align: center;
-            line-height: 30px;
-        }
-
-        .user-face img{
-            width: 58px;
-            height: 58px;
-			border:0px;
-            -moz-border-radius: 50px; 
-            -webkit-border-radius: 50px; 
-            border-radius: 50px; 
-
-        }
-        .reply-doc{
-            position: relative;
-            left:60px;
-            top: -50px;
-            padding-left:10px;
-        }
-
-        .topic-reply{
-            position: relative;
-            width: 450px;
-            margin:auto;
-            top: 290px;
-            left: 20px;
-            list-style-type:none;
-        }
-        #user{   
-            background-color: #fef8e0;
-            width: 400px;
-        }
-        .pubtime{
-            font-size: 0.8em;
-            float: right;
-        }
-        .reply{
-            width: 410px;
-            height: 70px;
-            margin-top: 10px;   
-        }
-        .reply_content{
-            margin: 5px;
-        }
-
-        #add_comment{
-	position: absolute;
-	left: 70px;
-	top:270px;
-	z-index: 3;
-        }
-        #sub-comment{
-            width:80px;height:30px;
-            background-color:#edbd03;color:white;
-            position: relative;
-            left: 325px;
-            top: 10px;
-            text-align: center;
-            line-height: 30px;
-        }
-		
-        #rep1{display: none}
-    a:link {
-	text-decoration: none;
-}
-a:visited {
-	text-decoration: none;
-}
-a:hover {
-	text-decoration: none;
-}
-a:active {
-	text-decoration: none;
-}
-#Layer1 {
-	position:absolute;
-	width:200px;
-	height:115px;
-	z-index:1;
-	left: 380px;
-	top: 45px;
-}
-    #Layer2 {
-	position:absolute;
-	width:200px;
-	height:115px;
-	z-index:9;
-	left: 195px;
-	top: 162px;
-}
-    #Layer3 {
-	position:absolute;
-	width:200px;
-	height:115px;
-	z-index:10;
-	left: 0px;
-	top: 0px;
-}
-    #Layer4 {
-	position:absolute;
-	width:200px;
-	height:115px;
-	z-index:11;
-	left: 1103px;
-	top: 0px;
-}
-    #Layer5 {
-	position:absolute;
-	width:200px;
-	height:115px;
-	z-index:12;
-	left: 1127px;
-	top: 534px;
-}
-    </style>
-</head> 
-
-<body onload="comments();MM_preloadImages('../static/images/openeye.png')">
-
-    <!--退出函数-->
-	<script type="text/javascript">
-		function _logout(){
-		
-			$.getJSON($SCRIPT_ROOT + '/_logout',{
-					},function(data){
-							location.href="/";
-			});	
-		}
-
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8"/>
+	<title>乐玩 - 猜歌</title>
+	<link rel="stylesheet" type="text/css" href="../static/css/main.css" />
+	<link rel="stylesheet" type="text/css" href="../static/css/leaves.css" />
+	<link rel="shortcut icon" type="image/x-icon" href="../static/img/icon.png" />
+	<script type="text/javascript" src="../static/js/jquery-1.7.2.min.js"></script>
+	<script type=text/javascript>
+		var $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
 	</script>
-
-    <div id="Layer5"><img src="../static/images/exit.png" width="196" height="138" style="cursor:pointer" onclick="_logout()" /></div> 
-
-    <!--答题函数-->
-	<script type="text/javascript">
- 	$(function() {
-    var submit_form = function(e) {
-		var answer = $("input[id='answer']").val();//用户回答	
-		//alert(answer);
-		if (answer.length==0){
-			alert("请填写答案"); 
-		}
-		else{
-      	$.getJSON($SCRIPT_ROOT + '/_guess', {
-        answer: $('input[id="answer"]').val()
-      }, function(data) {
-        $('#result').text(data.result);
-		if(data.result==0)
-		alert("回答错误");
-		if(data.result==1){
-		document.getElementById("num2").innerHTML=5;
-		alert("回答正确");
-		_next();
-		}
-      });
-      return false;
-    };
-	}
-
-    $('#sub-answer').bind('click', submit_form);
-
-    $('input[type=text]').bind('keydown', function(e) {
-      if (e.keyCode == 13) {
-        submit_form(e);
-      }
-    });
-
-    $('input[name=a]').focus();
-  });
-	</script>
-
-    <!--切歌函数-->
-	<script type="text/javascript">
-		function _next(){
+</head>
+<body class="branch-pic">
+	<!-- 记录用户名字 -->
+	<div id="this-user">
+		<span id="this-username">{{user_name}}</span>
+		<span id="this-userpic">{{user_pic}}</span>
+	</div>
+	<!-- 导航 -->
+	<nav>
+		<img id="cloud" src="../static/img/cloud.png" alt="cloud-decoration"/>
 		
-			$.getJSON($SCRIPT_ROOT + '/_next',{
-					},function(data){
-						path=data.result;
-						document.getElementById("songs").src=data.result;
-						document.getElementById("num1").innerHTML=7;
-			});	
-			i=0;
-			comments();
-		}
-
-	</script>
+		<a id="home-link" href="/home"></a>
 	
-	 <!--添加评论函数 -->
- 	<script type="text/javascript">
- 	$(function() {
-    var submit_form1 = function(e) {
-		var comment = $("input[id='comment']").val();//用户回答	
-		if (comment.length==0){
-			alert("请填写评论"); 
-		}
-		else{
-      	$.getJSON($SCRIPT_ROOT + '/reply', {
-        comment: $('input[id="comment"]').val()
-      }, function(data) {
-        $('#result').text(data.result);
-		if(data.result==1){
-		alert("评论成功");
-		i=0;
-		//alert(i);
-		comments();
-		}
-      });
-      return false;
-    };
-	}
-
-    $('#sub-comment').bind('click', submit_form1);
-
-    $('input[type=text]').bind('keydown', function(e) {
-      if (e.keyCode == 13) {
-        submit_form1(e);
-      }
-    });
-
-    $('input[name=a]').focus();
-  });
-	</script>
+		<div id="nav-listen">
+			<a href="/listen">
+				<img src="../static/img/nav_listen.png" alt="listen"/>
+				<div id="listen-tip" class="nav-tip">
+					<div class="nav-tip-hidden">
+						<span></span>
+					</div> 
+				</div>
+				<span id="txt-listen">听听歌</span>
+			</a>
+		</div>
+		
+		<div id="nav-guess">
+			<a href="/guess"><img src="../static/img/nav_guess.png" alt="guess"/>
+				<div id="guess-tip" class="nav-tip rotate180">
+					<div class="nav-tip-hidden">
+						<span></span>
+					</div>
+				</div>
+				<span id="txt-guess">猜猜歌</span>
+			</a>
+		</div>
+		
+		<div id="nav-top">
+			<a href="/top"><img src="../static/img/nav_top.png" alt="top"/>
+				<div id="top-tip" class="nav-tip">
+					<div class="nav-tip-hidden">
+						<span></span>
+					</div>
+				</div>
+				<span id="txt-top">排行榜</span>
+			</a>
+		</div>
+	</nav>
 	
-    <!--获取评论函数-->
-	<script type="text/javascript">
-		function comments(){
-			$.getJSON($SCRIPT_ROOT + '/get_comment',{
-				},function(data){
-					comment=data.comment;
-					sum=data.sum;	
-					document.getElementById("rep2").style.display="none";
-					document.getElementById("rep3").style.display="none";
-					document.getElementById("rep4").style.display="none";
-					if(	data.comment[i][4] != null){
-						document.getElementById("rep2").style.display="block";
-						document.getElementById("user_name2").innerHTML=data.comment[i][0];
-						document.getElementById("comment2").innerHTML=data.comment[i][1];
-						document.getElementById("time2").innerHTML=data.comment[i][2];
-						document.getElementById("avatar2").src=data.comment[i][3];
-						document.getElementById("num2").innerHTML=data.comment[i][4];
-					}
-					//alert(data.comment[i+1][0]);
-					if(	data.comment[i+1][4] != null){
-						document.getElementById("rep3").style.display="block";
-						document.getElementById("user_name3").innerHTML=data.comment[i+1][0];
-						document.getElementById("comment3").innerHTML=data.comment[i+1][1];
-						document.getElementById("time3").innerHTML=data.comment[i+1][2];
-						document.getElementById("avatar3").src=data.comment[i+1][3];
-					}
-					//document.getElementById("num3").innerHTML=data.comment[i][4];
-					if(	data.comment[i+2][4] != null){
-					document.getElementById("rep4").style.display="block";
-						document.getElementById("user_name4").innerHTML=data.comment[i+2][0];
-						document.getElementById("comment4").innerHTML=data.comment[i+2][1];
-						document.getElementById("time4").innerHTML=data.comment[i+2][2];
-						document.getElementById("avatar4").src=data.comment[i+2][3];
-					}
-					//document.getElementById("num4").innerHTML=data.comment[i+2][4];
-					//j = document.getElementById("num4").innerText;	
-					//i=parseInt(j);	
-					//alert(i);						
-				});	
-	}
-	</script>
-
-    <!--导航-->
-    <div class = "nav">
-        <div>
-            <img id="nav_bg" src="../static/images/nav_bg.png">
-        </div>
-
-        <div id="nav_lis" >
-            <a href="/listen" style="text-decoration:none;color: white;text-align:center">听听歌</a>
-        </div> 
-
-        <div>
-            <a href="/listen"><img src="../static/images/nav_listen.png" name="nav_listen" id="nav_listen"
-            onmouseover=" var lis=document.getElementById('nav_lis');
-            lis.style.width='100px';" 
-            onmouseout=" var lis=document.getElementById('nav_lis');
-            lis.style.width='0px';"            >        </div>
-
-        <div>
-            <a href="/guess"><img id="nav_guess" src="../static/images/nav_guess.png"
-            onmouseout=" var lis=document.getElementById('nav_gue');
-            lis.style.display='none';"
-            onmouseover=" var lis=document.getElementById('nav_gue');
-            lis.style.display='block';"  >
-        </div>
-
-        <div id="nav_gue" >
-            <a href="/guess" style="text-decoration:none;color: white;text-align:center">猜猜歌</a>
-        </div>
-
-        <div>
-            <a href="/top"><img id="nav_tops" src="../static/images/nav_top.png"
-            onmouseout=" var lis=document.getElementById('nav_top');
-            lis.style.display='none';"
-            onmouseover=" var lis=document.getElementById('nav_top');
-            lis.style.display='block';"  >
-        </div>
-
-        <div id="nav_top" >
-            <a href="/top" style="text-decoration:none;color: white;text-align:center">排行榜</a>
-        </div>
-</div>
-
-    <!--歌曲-->
-    <audio id="songs" autoplay="autoplay" loop="loop"> 
-     <source src="{{path}}" type="audio/mp3" /> 
-     <source src="laughter.ogg" type="audio/ogg" /> 
-     Your browser does not support the audio element. 
-    </audio> 
-
-    <!--歌曲及答题区域-->
-    <div id="Layer2"><a  href="/home" onmouseout="MM_swapImgRestore()" onmouseover="MM_swapImage('Image13','','../static/images/openeye.png',1)"><img src="../static/images/closedEye.png" name="Image13" width="88" height="91" border="0" id="Image13" /></a><a href="/home" onmouseout="MM_swapImgRestore()" onmouseover="MM_swapImage('Image12','','../static/images/openeye.png',1)"></a></div>
-    <div id="title">
-
-        <div id="question">
-        	<h1>该曲的歌名为<input id="answer"></h1>
-            <div id="sub-answer" class="button">提交</div>
-            <div style="position:relative;top:10px;"></div>
-
-        <!--音量及切歌-->
-        <div class="vol">
-            音量 &nbsp 
-            <input type="range" id="volume" name="points" min="0" max="10" step="0.2" value="10" onchange="change()" 
-            style="background:../static/logo.png left top repeat-x;"/>
-
-            <output id="result" style="display:none">  5</output>
-            <div onclick="var song = document.getElementById('songs'); 
-            var value = document.getElementById('volume').value ; 
-            if(song.volume != 0) song.volume =0; else song.volume = value/10;" 
-            style="color:white;background-color:#ffb100;height:25px;width:80px;display:inline;cursor:pointer">静音</div>
-            <div onclick="_next()" style="color:white;
-            background-color:#ffb100;height:25px;width:80px;display:inline;cursor:pointer">切歌</div>
-        </div>
-
-        <!--音量调节函数-->
-        <script type="text/javascript">
-            function change() {
-              var value = document.getElementById('volume').value ;
-              document.getElementById('result').innerHTML = value;
-              var song = document.getElementById('songs');
-                song.volume = value/10;
-            }
-        </script>
-
-        <!--音量条样式-->
-        <style type="text/css">
-            input[type="range"] {
-                -webkit-appearance: none;
-                margin-top: 2px;
-                background-color: #feb015;
-                border-radius: 15px;
-                width: 180px;    
-            }
-            input[type="range"]::-webkit-slider-thumb {
-                -webkit-appearance: none;
-                cursor: pointer;
-                top: 1px;
-                height: 9px;
-                width: 20px;
-                background: none repeat scroll 0 0 #f6d696;
-                border-radius: 15px;
-            }
-        </style>
-
-      </div>
-    </div>
-
-    <img src="../static/images/pre.png" style="height:100px; position:absolute; top:315px; left:416px; cursor:pointer; display:block; z-index: 3;" onclick="prevPage()">
-    <img src="../static/images/next.png" style="height:100px; position:absolute; top:315px; right:350px; cursor:pointer; z-index: 5;" onclick="nextPage()">
-
-    <!--评论区域-->
-    <div id="Layer1"><img src="../static/images/guess_background.png" width="667" height="750" /></div>
-    <div id="Layer3"><img src="../static/images/cloud.png" width="424" height="197" /></div>
-    <div id="Layer4"><img src="../static/images/branch.png" width="289" height="203" /></div>
-    <div  class="topic-reply" >
-        <!--已发表的评论-->
-        <ul id="comments">      
-
-            <!--li class="reply" id="rep1">
-                <div class="user-face">
-                    <a href="#"><img class="pil" src="{{user_pic}}" alt="Natsuko"/></a>
-                </div>
-                <div class="reply-doc content">
-                    <div id="user">
-                        <a href="#" class="">{{user_name}}</a> 
-                        <span class="pubtime">2013-11-05 23:06:18</span>
-                    </div>
-                    <p class="reply_content">123</p>
-                </div>
-            </li-->
-
-           <li class="reply" id="rep2" >
-                <div class="user-face">
-                    <a href="#"><img class="pil" id="avatar2" src=""/></a>
-                </div>
-                <div class="reply-doc content">
-                    <div id="user">
-                        <a href="#" class="" id="user_name2">{{user_name2}}</a> 
-                        <span class="pubtime"  id="time2">{{time2}}</span>
-                    </div>
-                    <p class="reply_content" id="comment2">{{comment2}}</p>
-                </div>
-				<div id="num2" style="display:none">0</div>
-          </li>
-
-           <li class="reply" id="rep3" >
-                <div class="user-face">
-                    <a href="#"><img class="pil" id="avatar3" src=""/></a>
-                </div>
-                <div class="reply-doc content">
-                    <div id="user">
-                        <a href="#" class="" id="user_name3">{{user_name2}}</a> 
-                        <span class="pubtime"  id="time3">{{time2}}</span>
-                    </div>
-                    <p class="reply_content" id="comment3">{{comment2}}</p>
-                </div>
-          </li>
-
-           <li class="reply" id="rep4" >
-                <div class="user-face">
-                    <a href="#"><img class="pil" id="avatar4" src=""/></a>
-                </div>
-                <div class="reply-doc content">
-                    <div id="user">
-                        <a href="#" class="" id="user_name4">{{user_name2}}</a> 
-                        <span class="pubtime"  id="time4">{{time2}}</span>
-                    </div>
-                    <p class="reply_content" id="comment4">{{comment2}}</p>
-                </div>
-				<div id="num4" style="display:none">0</div>
-          </li>
-            
-        </ul>
-
-        <!--发表评论   <div class="button" id="sub-comment" onclick="reply()">我要发言</div> 
-		<textarea name="rv_comment" rows="4" cols="55" id="comment"></textarea><br/>  -->
-        <div id="add_comment">
-			<input id="comment"><br/>
-            <div id="sub-comment" class="button">提交</div>
-      </div>
-
-    </div>
-    <script type="text/javascript">
-        function nextPage(){
-		//alert("next");
-			if(i<sum-4){
-				i=i+3;
-			}
-			//alert(i);
-			comments();
-        }
-		function prevPage(){
-			if(i>2){
-				i=i-3;
-			}
-			//alert(i);
-			comments();
-		}
-    </script>
-<div id="footer" style="width:100%; height:10px; position:absolute; top:700px; z-index: 7;"></div>
-
+	<!-- 主要区域 -->
+	<div id="main-wrap">
+		<!-- 播放器 隐藏 -->
+		<audio id="songs" autoplay="autoplay" loop="loop">
+			<source src="{{path}}" type="audio/mp3" />
+			<embed src="{{path}}" />
+			Your browser does not support the audio element. 
+		</audio>
+		
+		<!-- 答题结果 -->
+		<div id="answer-result">
+			<div id="answer-result-tip" class="nav-tip">
+				<div class="nav-tip-hidden">
+					<span></span>
+				</div>
+			</div>
+			<span id="txt-answer-result">回答正确</span>
+			<div class="answer-hidden"></div>
+		</div>
+		
+		<!-- 霓虹灯 -->
+		<div id="light">
+			<div class="top">
+				<span></span>
+				<span></span>
+				<span></span>
+				<span></span>
+				<span></span>
+				<span></span>
+				<span></span>
+				<span></span>
+				<span></span>
+				<span></span>
+				<span></span>
+				<span></span>
+				<span></span>
+				<span></span>
+				<span></span>
+				<span></span>
+				<span></span>
+				<span></span>
+				<span></span>
+				<span></span>
+				<span></span>
+				<span></span>
+				<span></span>
+				<span></span>
+				<span></span>
+			</div>
+			
+			<div class="right">
+				<span></span>
+				<span></span>
+				<span></span>
+				<span></span>
+				<span></span>
+				<span></span>
+				<span></span>
+			</div>
+			
+			<div class="bottom">
+				<span></span>
+				<span></span>
+				<span></span>
+				<span></span>
+				<span></span>
+				<span></span>
+				<span></span>
+				<span></span>
+				<span></span>
+				<span></span>
+				<span></span>
+				<span></span>
+				<span></span>
+				<span></span>
+				<span></span>
+				<span></span>
+				<span></span>
+				<span></span>
+				<span></span>
+				<span></span>
+				<span></span>
+				<span></span>
+				<span></span>
+				<span></span>
+				<span></span>
+			</div>
+			
+			<div class="left">
+				<span></span>
+				<span></span>
+				<span></span>
+				<span></span>
+				<span></span>
+				<span></span>
+				<span></span>
+			</div>
+			
+		</div>
+			
+		<!-- 答题区 - 音量 - 切歌 -->
+		<div id="music-area">
+			<div>
+				<form>
+					<label>歌名为：</label>
+					<input id="answer" type="text" />
+					<input id="btn-answer" class="basic-btn" type="submit" value="猜一个" />
+				</form>
+			</div>
+			
+			<div>
+				<label><img id="volume-pic" src="../static/img/volumeOn.png" alt="volume on"/></label>
+				<input id="volume" type="range" name="points" min="0" max="10" step="0.2" value="10"/>
+				<input id="btn-switch-song" class="basic-btn" type="button" value="换一首"/>
+			</div>
+		</div>
+		
+		<!-- 评论提示 -->
+		<div id="comment-result">
+			<div id="comment-result-tip" class="nav-tip">
+				<div class="nav-tip-hidden">
+					<span></span>
+				</div>
+			</div>
+			<span id="txt-comment-result">请填写评论</span>
+			<div class="comment-hidden"></div>
+		</div>
+		
+		<!-- 评论 -->
+		<div id="comment-area">
+			<form class="clearfix">
+				<textarea id="new-comment"></textarea>
+				<input id="btn-comment" type="submit" value="说一声" />
+			</form>
+			
+			<!-- 评论列表头 -->
+			<p id="nav-comment">
+				<span>大家说</span>
+				<span class="wrap">
+					<a id="previous-page" href="javascript:;">上一页</a>
+					<a id="next-page" href="javascript:;">下一页</a>
+				</span>
+			</p>
+			
+			<!-- 评论列表 -->
+			<ul id="comment-list">
+				<!-- 	
+				<li class="clearfix">
+					<img id="avatar" src=""/>
+					<div class="comment-txt-area">
+						<p>
+							<span id="username" class="username">{{user_name}}</span>
+							<span id="time" class="time">{{time}}</span>
+						</p>
+						<p id="comment" class="comment">{{comment}}</p>
+					</div>
+				</li>
+				-->
+			</ul>
+		</div>
+	
+	</div> <!-- end content-wrap -->
+	
+	<img id="exit" src="../static/img/exit.png" alt="exit"/>
+	
+	
+	<script type="text/javascript" src="../static/js/main.js"></script>
+	<script type="text/javascript" src="../static/js/leaves.js"></script>
 </body>
-<script type="text/javascript" src="../static/leaves.js"></script>
 </html>

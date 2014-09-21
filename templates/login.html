@@ -1,121 +1,49 @@
-
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN"
-"http://www.w3.org/TR/html4/strict.dtd">
-
-<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<!DOCTYPE html>
+<html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>乐玩-一起玩音乐</title>
-<link href="../static/bootstrap.css" rel="stylesheet" />
-<link rel="shortcut icon" href="../static/icon.png" type="image/x-icon">
-<script type="text/javascript" src="../static/jquery-1.7.2.min.js"></script>
-<script type="text/javascript" src="../static/artDialog4.1.6/artDialog.js"></script>
-<script src="../static/artDialog4.1.6/jquery.artDialog.source.js?skin=default"></script>
-<script type=text/javascript
-  src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
-<script type=text/javascript>
-  var $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
-</script>
-<style>
-body{font-family:"黑体"}
-.firstP{color:white;position:relative; left:80px;-webkit-transform:rotate(10deg); 
-font-size:12pt; text-align: center; line-height: 3.5em;}
-.trans{-webkit-transition:width 2s, top 2s, -webkit-transform 2s; /* Safari and Chrome */}
-.firstP:hover
-{
-top:-50px;
-transform:rotate(180deg);
--webkit-transform:rotate(180deg); /* Safari and Chrome */
-}
-.log{position:absolute; top: 300px; right:240px;}
-#btn-log{width:220px;height:40px;position:relative;font-size: 15pt;background-color:rgb(236,178,10); color:white; border:0px;text-align: center;line-height: 40px;cursor: pointer;}
-#remember{position:absolute; bottom:-35px; right: 0px;}
-.checkbox{position: absolute; bottom:-40px;}
-.signup{color:white;position: absolute; bottom: -20px;}
-</style>
-
-
+	<meta charset="utf-8"/>
+	<title>乐玩 - 一起玩音乐</title>
+	<link rel="stylesheet" type="text/css" href="../static/css/main.css" />
+	<link rel="shortcut icon" type="image/x-icon" href="../static/img/icon.png" />
+	<script type="text/javascript" src="../static/js/jquery-1.7.2.min.js"></script>
+	<script type=text/javascript>
+		var $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
+	</script>
+	<style type="text/css">
+		body{
+			background: #000 url(../static/img/bg.jpg) no-repeat;
+			background-size:contain;
+			color: #fff;
+		}
+	</style>
 </head>
 <body>
-<script type="text/javascript">
- $(function() {
-    var submit_form = function(e) {
-var username = $("input[name='username']").val();//昵称
-var password = $("input[name='password']").val();//昵称
-if (username.length==0){
-alert("请填写用户名");
-}else if(password.length==0){
-alert("请填写密码");
-}
-else{
-      $.getJSON($SCRIPT_ROOT + '/_login', {
-        a: $('input[name="username"]').val(),
-        b: $('input[name="password"]').val()
-      }, function(data) {
-        $('#result').text(data.result);
-if(data.result==0)
-alert("密码错误");
-if(data.result==1)
-location.href="/guess";
-if(data.result==2)
-alert("用户名错误");
-        //$('input[name=a]').focus().select();
-      });
-      return false;
-    };
-}
-
-    $('#btn-log').bind('click', submit_form);
-
-    $('input[type=text]').bind('keydown', function(e) {
-      if (e.keyCode == 13) {
-        submit_form(e);
-      }
-    });
-
-    $('input[name=a]').focus();
-  });
-</script>
-<div class="login">
-<img src="../static/bg.jpg" />
-
-<div class="log">
-  <div class="firstP trans move">
-  <p style="font-size:6em">乐 玩</p>
-  <p style="font-size:1.2em">一起玩音乐</p>
-</div>
-<form class="form-horizontal" method="post" action="">
-  <div class="control-group">
-    <div class="controls">
-<input type="text" name="username" id="username" placeholder="username:">
-    </div>
-  </div>
-  <div class="control-group">
-         
-    <div class="controls">
-      <input type="password" name="password" id="password" placeholder="Password:">
-    </div>
-  </div>
-  <div class="control-group">
-    <div class="controls">
-
-      <div class="btns" id="btn-log" onClick="_submit()"> 登陆</div>
-      <div class="signup">
-      <p> 还没有帐号？<a href="/register" style="color:rgb(236,178,10);position:relative;left:62px;"> 立即注册</a> </p>     
-      </div>
-      <label class="checkbox" style="color:white">
-        <input type="checkbox"> 下次自动登陆
-      </label>
-      <a id="remember" href="account/getPW.html" style="color:rgb(236,178,10)"> 忘记密码？</a>
-    </div>
-  </div>
-</form>
-</div>
-<!--span id=result>?</span>
-<div id="graybar"> </div>
-<div id="copyright">
-<p>© 2005－2013 yuewan.com, all rights reserved</p-->
-</div>
-</div>
+	<div id="login-register">
+		<div id="login">
+			<div class="title rotate">
+				<p>乐玩</p>
+				<p class="description">一起玩音乐</p>
+			</div>
+			
+			<form>
+				<span id="login-error"></span>
+				<div class="input-item">
+					<input class="basic-input" type="text" name="username" id="login-username" placeholder="用户名"/>
+					<span id="login-username-error">请输入正确的用户名</span>
+				</div>
+				<div class="input-item">
+					<input class="basic-input" type="password" name="password" id="login-password" placeholder="密码"/>
+					<span id="login-password-error">请输入正确的密码</span>
+				</div>
+				<div class="input-item">
+					<input class="basic-btn" id="login-btn" type="submit" value="登录"/>
+				</div>
+			</form>
+			
+			<div class="link">还没账号？ <a href="/register">立即注册 →</a></div>
+		</div>
+	</div>
+	
+	<script type="text/javascript" src="../static/js/main.js"></script>
 </body>
 </html>
