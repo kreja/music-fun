@@ -4,7 +4,7 @@
 - 乐玩是一个以听歌为辅、猜歌为主的音乐网站。
 - 目前功能：听歌、猜歌、切歌、歌曲搜索、评论、个人主页、排行榜。
 - 涉及技术：html、css、javascript、jquery、数据库、flask、python。
-- 旧版演示视频：http://v.youku.com/v_show/id_XNjkxNDI1MTY0.html
+- 新版演示视频：http://v.youku.com/v_show/id_XNzg3OTg0NTUy.html
 
 ## 安装说明
 1. 需要安装 python、flask；
